@@ -28,7 +28,7 @@ constant LR) — only the block layout differs.
 | d3 | 1.3M | **4.836** | 4.882 | 5.098 | **Standard** |
 | d4 | 3.1M | **4.646** | 4.806 | 4.681 | **Standard** |
 | d6 | 10.6M | **4.385** | 4.454 | 4.482 | **Standard** |
-| d8 | 25.2M | **4.252** | OOM | 4.261 | **Standard** |
+| d8 | 25.2M | **4.252** | OOM¹ | 4.261 | **Standard** |
 
 | Metric | Standard | Attn-Heavy | MLP-Heavy |
 |--------|----------|------------|-----------|
@@ -55,3 +55,12 @@ Don't mess with this ratio. Spend your architecture innovation budget elsewhere.
 - `run.py` — train all three arms
 - `plot.py` — generate the comparison figure
 - `variant_trunk.py` — local trunk classes (AttnHeavyGPT, MLPHeavyGPT)
+
+---
+
+¹ **Attn-Heavy d8 OOM**: with 18 blocks (12 attn + 6 mlp, vs 8 for
+Standard), the activation memory exceeded the 32 GB VRAM budget at
+`device_batch_size=32`. A re-run at `device_batch_size=16` is in progress;
+the Attn-Heavy frontier exponent and d8 final loss will be updated when it
+completes. d2-d6 data is already sufficient to confirm the core conclusion
+(Standard > Attn-Heavy at all depths ≥ 3).
