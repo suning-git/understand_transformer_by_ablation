@@ -28,11 +28,11 @@ constant LR) — only the block layout differs.
 | d3 | 1.3M | **4.836** | 4.882 | 5.098 | **Standard** |
 | d4 | 3.1M | **4.646** | 4.806 | 4.681 | **Standard** |
 | d6 | 10.6M | **4.385** | 4.454 | 4.482 | **Standard** |
-| d8 | 25.2M | **4.252** | OOM¹ | 4.261 | **Standard** |
+| d8 | 25.2M | **4.252** | 4.376¹ | 4.261 | **Standard** |
 
 | Metric | Standard | Attn-Heavy | MLP-Heavy |
 |--------|----------|------------|-----------|
-| Frontier exponent a | **0.499** | pending | 0.511 |
+| Frontier exponent a | **0.499** | 0.510 | 0.511 |
 | Loss-N exponent alpha | 0.0464 | 0.0418 | 0.0484 |
 | R² of L~N^(-alpha) | **0.996** | 0.966 | 0.941 |
 
@@ -58,9 +58,6 @@ Don't mess with this ratio. Spend your architecture innovation budget elsewhere.
 
 ---
 
-¹ **Attn-Heavy d8 OOM**: with 18 blocks (12 attn + 6 mlp, vs 8 for
-Standard), the activation memory exceeded the 32 GB VRAM budget at
-`device_batch_size=32`. A re-run at `device_batch_size=16` is in progress;
-the Attn-Heavy frontier exponent and d8 final loss will be updated when it
-completes. d2-d6 data is already sufficient to confirm the core conclusion
-(Standard > Attn-Heavy at all depths ≥ 3).
+¹ **Attn-Heavy d8**: the original run (`device_batch_size=32`) OOM'd because
+18 blocks (12 attn + 6 mlp) exceeds standard's 8 blocks. Re-ran successfully
+at `device_batch_size=16`.
