@@ -1,6 +1,6 @@
 # Can one sequence-level loss replace dense next-token supervision?
 
-**Author:** Zhang Leizhi (Ra88_Ra88)
+**Author:** zhang leizhi / 张雷智
 
 ## TL;DR
 
